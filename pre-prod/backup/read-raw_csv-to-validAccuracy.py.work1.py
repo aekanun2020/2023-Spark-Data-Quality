@@ -64,29 +64,6 @@ def main():
     valid_df.groupBy("int_rate", "int_rate_valid").count().show()
     valid_df.groupBy("grade", "grade_valid").count().show()
 
-    # Configuration สำหรับการเขียนลง MSSQL
-    server_name = "jdbc:sqlserver://34.66.35.60"
-    database_name = "dataquality"
-    url = server_name + ";" + "databaseName=" + database_name + ";"
-    table_name = "accuracy_loan_status"
-    username = "SA"
-    password = "Passw0rd123456"
-
-    # สร้าง properties สำหรับการเชื่อมต่อกับ MSSQL
-    connection_properties = {
-        "user": username,
-        "password": password,
-        "driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-    }
-
-    # เขียน DataFrame ลงไปใน MSSQL
-    valid_df.write.jdbc(
-        url=url,
-        table=table_name,
-        mode="overwrite",
-        properties=connection_properties
-    )
-
     spark.stop()
 
 if __name__ == "__main__":
